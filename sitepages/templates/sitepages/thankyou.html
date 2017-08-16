@@ -1,0 +1,69 @@
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<h1>Thank You!</h1>
+
+<h3>
+    {% if message_reload %}
+        {{ message_reload }}
+</h3>
+    {% elif message %}
+        <h3>
+            {{ message }}
+        </h3>
+
+        <table>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            {% for item in product %}
+            <tr>
+                {% for value in item %}
+                    {% if forloop.counter == 2 %}
+                        <td>{{ value }}</td>
+                    {% elif forloop.counter == 3 %}
+                        <td>{{ value }}</td>
+                    {% elif forloop.counter == 4 %}
+                        <td>{{ value }}</td>
+                    {% else %}
+
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+                {% endfor %}
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    Amount Paid: 
+                </td>
+                <td colspan="2">
+                    {% if orderTotal %}
+                        {{ orderTotal }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Total Items
+                </td>
+                <td colspan="2">
+                    {% if numberOfItems %}
+                        {{ numberOfItems }}
+                    {% endif %}
+                </td>
+            </tr>
+
+        </table>
+    {% endif %}
+
+
+
+

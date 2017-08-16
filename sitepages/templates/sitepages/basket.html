@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body%}
+        
+        <section id="basket">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Checkout</h2>
+                        <form method="post" action="{% url 'basket' %}" class="form-checkout" id="form-checkout">
+                            {% csrf_token %}
+
+                            {% if message %}
+                                {{ message }}
+                            {% endif %}
+
+                           <input type="hidden" value="" name="SelectedProduct" id="SelectedProduct">
+
+                           <table class="table-checkout">
+                                <tr>
+                                    <th></th>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Sub-total</th>
+                                    <th>Add/Remove</th>
+                                </tr>
+
+                               {% for item in product %}
+
+
+                                <tr>
+                                    {% for value in item %}
+                                        {% if forloop.counter == 1 %}
+                                            <td>
+                                                <img class="recipe-img" src="media/{{ value }}" alt="">
+                                            </td>
+                                        {% elif forloop.counter == 6 %}
+                                            <td>
+                                                <input type="submit" value="+" name="Add"    id="{{ value }}" onClick="reply_click(this.id)">
+                                                <input type="submit" value="-" name="Minus"  id="{{ value }}" onClick="reply_click(this.id)">
+                                                <input type="submit" value="x" name="Delete" id="{{ value }}" onClick="reply_click(this.id)">
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <input type="hidden" name="productDetails" value="{{ value }}">
+                                                {{ value }}
+                                            </td>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </tr>
+
+                                {% endfor %}
+
+
+                            </table>
+                            <br>
+                        </form>
+                        
+                        <br>
+                        <br>
+                        
+                        <form method="post" action="{% url 'thank_you' %}" class="form-checkout-bottom" id="form-checkout-bottom">
+                            {% csrf_token %}
+                            
+                            <div class="row table-totals">
+                                <h4>Cart Totals</h4>
+
+                                <table class="cellspacing=0">
+
+                                    <tr class="cart-subtotal">
+                                        <th>Items:</th>
+                                        <td>
+                                            {% if numberOfItems %}
+                                                {{ numberOfItems }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    <tr class="shipping">
+                                        <th>Shipping and Handling</th>
+                                        <td>Free Shipping</td>
+                                    </tr>
+
+                                    <tr class="order-total">
+                                        <th>Order Total</th>
+                                        <td><strong>
+                                                {% if orderTotal %}
+                                                    {{ orderTotal }}
+                                                {% endif %}
+                                            </strong> </td>
+                                    </tr>
+
+
+                                </table>
+                                <input type="submit" value="Buy">
+                            </div><!-- CART TOTALS-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </section>
+        {% endblock%}
